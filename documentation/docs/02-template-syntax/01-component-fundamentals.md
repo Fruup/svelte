@@ -53,7 +53,7 @@ To get all properties, use rest syntax:
 
 ```svelte
 <script>
-    let { a, b, c, ...everythingElse } = $props();
+	let { a, b, c, ...everythingElse } = $props();
 </script>
 ```
 
@@ -71,14 +71,14 @@ If you're using TypeScript, you can declare the prop types:
 
 ```svelte
 <script lang="ts">
-    interface Props {
-        a: number;
-        b: boolean;
-        c: string;
-        [key: string]: unknown;
-    }
+	interface Props {
+		a: number;
+		b: boolean;
+		c: string;
+		[key: string]: unknown;
+	}
 
-    let { a, b, c, ...everythingElse }: Props = $props();
+	let { a, b, c, ...everythingElse }: Props = $props();
 </script>
 ```
 
@@ -131,13 +131,13 @@ If you'd like to react to changes to a prop, use the `$derived` or `$effect` run
 <script>
 	let count = $state(0);
 
-    let double = $derived(count * 2);
+	let double = $derived(count * 2);
 
-    $effect(() => {
-        if (count > 10) {
-            alert('Too high!');
-        }
-    });
+	$effect(() => {
+		if (count > 10) {
+			alert('Too high!');
+		}
+	});
 </script>
 ```
 

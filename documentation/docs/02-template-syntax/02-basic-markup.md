@@ -201,8 +201,9 @@ You can add a special comment starting with `@component` that will show up when 
   ```
 -->
 <script>
-    let { name } = $props();
+	let { name } = $props();
 </script>
+
 <main>
 	<h1>
 		Hello, {name}

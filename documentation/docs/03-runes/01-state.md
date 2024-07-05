@@ -53,14 +53,17 @@ Objects and arrays are made deeply reactive by wrapping them with [`Proxies`](ht
 
 ```svelte
 <script>
-	let entries = $state([{ id: 1, text: 'foo' }, { id: 2, text: 'bar' }]);
+	let entries = $state([
+		{ id: 1, text: 'foo' },
+		{ id: 2, text: 'bar' }
+	]);
 </script>
 
 {#each entries as entry (entry.id)}
-    {entry.text}
+	{entry.text}
 {/each}
 
-<button onclick={() => entries[1].text = 'baz'}>change second entry text</button>
+<button onclick={() => (entries[1].text = 'baz')}>change second entry text</button>
 ```
 
 > Only POJOs (plain of JavaScript objects) are made deeply reactive. Reactivity will stop at class boundaries and leave those alone
@@ -71,14 +74,19 @@ State declared with `$state.frozen` cannot be mutated; it can only be _reassigne
 
 ```svelte
 <script>
-	let entries = $state([{ id: 1, text: 'foo' }, { id: 2, text: 'bar' }]);
+	let entries = $state([
+		{ id: 1, text: 'foo' },
+		{ id: 2, text: 'bar' }
+	]);
 </script>
 
 {#each entries as entry (entry.id)}
-    {entry.text}
+	{entry.text}
 {/each}
 
-<button onclick={() => entries = [entries[0], { id: entries[1].id, text: 'baz' }]}>change second entry text</button>
+<button onclick={() => (entries = [entries[0], { id: entries[1].id, text: 'baz' }])}
+	>change second entry text</button
+>
 ```
 
 This can improve performance with large arrays and objects that you weren't planning to mutate anyway, since it avoids the cost of making them reactive. Note that frozen state can _contain_ reactive state (for example, a frozen array of reactive objects).
@@ -194,9 +202,9 @@ export function createCounter(initial: number) {
 ```svelte
 <!--- file: App.svelte --->
 <script>
-    import { createCounter } from './counter.svelte';
+	import { createCounter } from './counter.svelte';
 
-    const counter = createCounter();
+	const counter = createCounter();
 </script>
 
 <button onclick={counter.increment}>{counter.count} / {counter.double}</button>
@@ -219,8 +227,8 @@ export const appState = $state({
 ```svelte
 <!--- file: App.svelte --->
 <script>
-    import { appState } from './app-state.svelte';
+	import { appState } from './app-state.svelte';
 </script>
 
-<button onclick={() => appState.loggedIn = false}>Log out</button>
+<button onclick={() => (appState.loggedIn = false)}>Log out</button>
 ```

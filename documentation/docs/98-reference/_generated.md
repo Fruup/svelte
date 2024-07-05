@@ -6,7 +6,6 @@ This file is generated. Do not edit. If you are doing a translation, remove the 
 
 <!-- @include_start $derived -->
 
-
 ```js
 // @noErrors
 import {
@@ -68,13 +67,14 @@ Sometimes you need to create complex derivations that don't fit inside a short e
 In these cases, you can use `$derived.by` which accepts a function as its argument.
 
 Example:
+
 ```ts
 let total = $derived.by(() => {
-  let result = 0;
- for (const n of numbers) {
-   result += n;
-  }
-  return result;
+	let result = 0;
+	for (const n of numbers) {
+		result += n;
+	}
+	return result;
 });
 ```
 
@@ -167,11 +167,9 @@ const toString: never;
 
 </div>
 
-
 <!-- @include_end $derived -->
 
 <!-- @include_start $effect -->
-
 
 ```js
 // @noErrors
@@ -288,6 +286,7 @@ Runs code right before a component is mounted to the DOM, and then whenever its 
 The timing of the execution is right before the DOM is updated.
 
 Example:
+
 ```ts
 $effect.pre(() => console.log('The count is now ' + count));
 ```
@@ -327,19 +326,20 @@ nested effects that you want to manually control. This rune also allows for crea
 initialisation phase.
 
 Example:
+
 ```svelte
 <script>
-  let count = $state(0);
+	let count = $state(0);
 
-  const cleanup = $effect.root(() => {
-    $effect(() => {
+	const cleanup = $effect.root(() => {
+		$effect(() => {
 			console.log(count);
-		})
+		});
 
-     return () => {
-       console.log('effect root cleanup');
-			}
-  });
+		return () => {
+			console.log('effect root cleanup');
+		};
+	});
 </script>
 
 <button onclick={() => cleanup()}>cleanup</button>
@@ -374,13 +374,14 @@ const toString: never;
 The `$effect.tracking` rune is an advanced feature that tells you whether or not the code is running inside a tracking context, such as an effect or inside your template.
 
 Example:
+
 ```svelte
 <script>
-  console.log('in component setup:', $effect.tracking()); // false
+	console.log('in component setup:', $effect.tracking()); // false
 
-  $effect(() => {
-    console.log('in effect:', $effect.tracking()); // true
-  });
+	$effect(() => {
+		console.log('in effect:', $effect.tracking()); // true
+	});
 </script>
 
 <p>in template: {$effect.tracking()}</p> <!-- true -->
@@ -399,11 +400,9 @@ function tracking(): boolean;
 
 </div>
 
-
 <!-- @include_end $effect -->
 
 <!-- @include_start $state -->
-
 
 ```js
 // @noErrors
@@ -493,6 +492,7 @@ const caller: never;
 Declares reactive read-only state that is shallowly immutable.
 
 Example:
+
 ```ts
 <script>
   let items = $state.frozen([0]);
@@ -520,8 +520,6 @@ function frozen<T>(initial: T): Readonly<T>;
 
 ## frozen
 
-
-
 <div class="ts-block">
 
 ```ts
@@ -536,6 +534,7 @@ function frozen<T>(): Readonly<T> | undefined;
 Compare two values, one or both of which is a reactive `$state(...)` proxy.
 
 Example:
+
 ```ts
 <script>
  let foo = $state({});
@@ -603,6 +602,7 @@ const prototype: never;
 To take a static snapshot of a deeply reactive `$state` proxy, use `$state.snapshot`:
 
 Example:
+
 ```ts
 <script>
   let counter = $state({ count: 0 });
@@ -638,11 +638,9 @@ const toString: never;
 
 </div>
 
-
 <!-- @include_end $state -->
 
 <!-- @include_start svelte -->
-
 
 ```js
 // @noErrors
@@ -715,11 +713,12 @@ The `detail` argument corresponds to the [CustomEvent.detail](https://developer.
 property and can contain any type of data.
 
 The event dispatcher can be typed to narrow the allowed event names and the type of the `detail` argument:
+
 ```ts
 const dispatch = createEventDispatcher<{
- loaded: never; // does not take a detail argument
- change: string; // takes a detail argument of type string, which is required
- optional: number | null; // takes an optional detail argument of type number
+	loaded: never; // does not take a detail argument
+	change: string; // takes a detail argument of type string, which is required
+	optional: number | null; // takes an optional detail argument of type number
 }>();
 ```
 
@@ -761,9 +760,7 @@ https://svelte.dev/docs/svelte#getallcontexts
 
 ```ts
 // @noErrors
-function getAllContexts<
-	T extends Map<any, any> = Map<any, any>
->(): T;
+function getAllContexts<T extends Map<any, any> = Map<any, any>>(): T;
 ```
 
 </div>
@@ -808,13 +805,8 @@ Hydrates a component on the given target and returns the exports and potentially
 
 ```ts
 // @noErrors
-function hydrate<
-	Props extends Record<string, any>,
-	Exports extends Record<string, any>
->(
-	component:
-		| ComponentType<SvelteComponent<Props, any, any>>
-		| Component<Props, Exports, any>,
+function hydrate<Props extends Record<string, any>, Exports extends Record<string, any>>(
+	component: ComponentType<SvelteComponent<Props, any, any>> | Component<Props, Exports, any>,
 	options: {
 		target: Document | Element | ShadowRoot;
 		props?: Props | undefined;
@@ -836,13 +828,8 @@ Mounts a component to the given target and returns the exports and potentially t
 
 ```ts
 // @noErrors
-function mount<
-	Props extends Record<string, any>,
-	Exports extends Record<string, any>
->(
-	component:
-		| ComponentType<SvelteComponent<Props, any, any>>
-		| Component<Props, Exports, any>,
+function mount<Props extends Record<string, any>, Exports extends Record<string, any>>(
+	component: ComponentType<SvelteComponent<Props, any, any>> | Component<Props, Exports, any>,
 	options: {
 		target: Document | Element | ShadowRoot;
 		anchor?: Node | undefined;
@@ -877,7 +864,7 @@ function onDestroy(fn: () => any): void;
 ## onMount
 
 The `onMount` function schedules a callback to run as soon as the component has been mounted to the DOM.
-It must be called during the component's initialisation (but doesn't need to live *inside* the component;
+It must be called during the component's initialisation (but doesn't need to live _inside_ the component;
 it can be called from an external module).
 
 If a function is returned _synchronously_ from `onMount`, it will be called when the component is unmounted.
@@ -890,12 +877,7 @@ https://svelte.dev/docs/svelte#onmount
 
 ```ts
 // @noErrors
-function onMount<T>(
-	fn: () =>
-		| NotFunction<T>
-		| Promise<NotFunction<T>>
-		| (() => any)
-): void;
+function onMount<T>(fn: () => NotFunction<T> | Promise<NotFunction<T>> | (() => any)): void;
 ```
 
 </div>
@@ -969,17 +951,21 @@ Can be used to create strongly typed Svelte components.
 You have component library on npm called `component-library`, from which
 you export a component called `MyComponent`. For Svelte+TypeScript users,
 you want to provide typings. Therefore you create a `index.d.ts`:
+
 ```ts
 import type { Component } from 'svelte';
 export declare const MyComponent: Component<{ foo: string }> {}
 ```
+
 Typing this makes it possible for IDEs like VS Code with the Svelte extension
 to provide intellisense and to use the component like this in a Svelte file
 with TypeScript:
+
 ```svelte
 <script lang="ts">
-	import { MyComponent } from "component-library";
+	import { MyComponent } from 'component-library';
 </script>
+
 <MyComponent foo={'bar'} />
 ```
 
@@ -1141,12 +1127,12 @@ type ComponentEvents<Comp extends SvelteComponent> =
 		: never;
 ```
 
-
 </div>
 
 ## ComponentProps
 
 Convenience type to get the props the given component expects. Example:
+
 ```html
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
@@ -1168,7 +1154,6 @@ type ComponentProps<
 			? Props
 			: never;
 ```
-
 
 </div>
 
@@ -1196,7 +1181,6 @@ type ComponentType<
 	element?: typeof HTMLElement;
 };
 ```
-
 
 </div>
 
@@ -1229,9 +1213,11 @@ interface EventDispatcher<
 ## Snippet
 
 The type of a `#snippet` block. You can use it to (for example) express that your component expects a snippet of a certain type:
+
 ```ts
 let { banner }: { banner: Snippet<{ text: string }> } = $props();
 ```
+
 You can only call a snippet through the `{@render ...}` tag.
 
 <div class="ts-block">
@@ -1252,7 +1238,6 @@ type Snippet<T extends unknown[] = []> =
 				};
 			};
 ```
-
 
 </div>
 
@@ -1306,8 +1291,8 @@ constructor(options: ComponentConstructorOptions<Properties<Props, Slots>>);
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This constructor only exists when using the `asClassComponent` compatibility helper, which
-is a stop-gap solution. Migrate towards using `mount` instead. See
-https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes for more info.
+  is a stop-gap solution. Migrate towards using `mount` instead. See
+  https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes for more info.
 
 </div>
 
@@ -1325,8 +1310,8 @@ $destroy(): void;
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
-for more info.
+  is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
+  for more info.
 
 </div>
 
@@ -1347,8 +1332,8 @@ $on<K extends Extract<keyof Events, string>>(
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
-for more info.
+  is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
+  for more info.
 
 </div>
 
@@ -1366,8 +1351,8 @@ $set(props: Partial<Props>): void;
 <div class="ts-block-property-bullets">
 
 - <span class="tag deprecated">deprecated</span> This method only exists when using one of the legacy compatibility helpers, which
-is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
-for more info.
+  is a stop-gap solution. See https://svelte-5-preview.vercel.app/docs/breaking-changes#components-are-no-longer-classes
+  for more info.
 
 </div>
 
@@ -1393,24 +1378,28 @@ class SvelteComponentTyped<
 > extends SvelteComponent<Props, Events, Slots> {}
 ```
 
-
 </div>
-
 
 <!-- @include_end svelte -->
 
 <!-- @include_start svelte/action -->
+
 ## Action
 
 Actions are functions that are called when an element is created.
 You can use this interface to type such actions.
 The following example defines an action that only works on `<div>` elements
 and optionally accepts a parameter which it has a default value for:
+
 ```ts
-export const myAction: Action<HTMLDivElement, { someProperty: boolean } | undefined> = (node, param = { someProperty: true }) => {
-  // ...
-}
+export const myAction: Action<HTMLDivElement, { someProperty: boolean } | undefined> = (
+	node,
+	param = { someProperty: true }
+) => {
+	// ...
+};
 ```
+
 `Action<HTMLDivElement>` and `Action<HTMLDiveElement, undefined>` both signal that the action accepts no parameters.
 
 You can return an object with methods `update` and `destroy` from the function and type which additional attributes and events it has.
@@ -1448,6 +1437,7 @@ interface Action<
 ## ActionReturn
 
 Actions can return an object containing the two properties defined in this interface. Both are optional.
+
 - update: An action can have a parameter. This method will be called whenever that parameter changes,
   immediately after Svelte has applied updates to the markup. `ActionReturn` and `ActionReturn<undefined>` both
   mean that the action accepts no parameters.
@@ -1457,6 +1447,7 @@ Additionally, you can specify which additional attributes and events the action 
 This applies to TypeScript typings only and has no effect at runtime.
 
 Example usage:
+
 ```ts
 interface Attributes {
 	newprop?: string;
@@ -1505,11 +1496,9 @@ destroy?: () => void;
 </div>
 </div>
 
-
 <!-- @include_end svelte/action -->
 
 <!-- @include_start svelte/animate -->
-
 
 ```js
 // @noErrors
@@ -1632,23 +1621,13 @@ easing?: (t: number) => number;
 </div>
 </div>
 
-
 <!-- @include_end svelte/animate -->
 
 <!-- @include_start svelte/compiler -->
 
-
 ```js
 // @noErrors
-import {
-	VERSION,
-	compile,
-	compileModule,
-	migrate,
-	parse,
-	preprocess,
-	walk
-} from 'svelte/compiler';
+import { VERSION, compile, compileModule, migrate, parse, preprocess, walk } from 'svelte/compiler';
 ```
 
 ## VERSION
@@ -1676,10 +1655,7 @@ https://svelte.dev/docs/svelte-compiler#svelte-compile
 
 ```ts
 // @noErrors
-function compile(
-	source: string,
-	options: CompileOptions
-): CompileResult;
+function compile(source: string, options: CompileOptions): CompileResult;
 ```
 
 </div>
@@ -1694,10 +1670,7 @@ https://svelte.dev/docs/svelte-compiler#svelte-compile
 
 ```ts
 // @noErrors
-function compileModule(
-	source: string,
-	options: ModuleCompileOptions
-): CompileResult;
+function compileModule(source: string, options: ModuleCompileOptions): CompileResult;
 ```
 
 </div>
@@ -1868,11 +1841,9 @@ code: string;
 </div>
 </div>
 
-
 <!-- @include_end svelte/compiler -->
 
 <!-- @include_start svelte/easing -->
-
 
 ```js
 // @noErrors
@@ -2314,11 +2285,9 @@ function sineOut(t: number): number;
 
 </div>
 
-
 <!-- @include_end svelte/easing -->
 
 <!-- @include_start svelte/events -->
-
 
 ```js
 // @noErrors
@@ -2335,16 +2304,10 @@ rather than `addEventListener` will preserve the correct order relative to handl
 
 ```ts
 // @noErrors
-function on<
-	Element extends HTMLElement,
-	Type extends keyof HTMLElementEventMap
->(
+function on<Element extends HTMLElement, Type extends keyof HTMLElementEventMap>(
 	element: Element,
 	type: Type,
-	handler: (
-		this: Element,
-		event: HTMLElementEventMap[Type]
-	) => any,
+	handler: (this: Element, event: HTMLElementEventMap[Type]) => any,
 	options?: AddEventListenerOptions | undefined
 ): () => void;
 ```
@@ -2371,11 +2334,9 @@ function on(
 
 </div>
 
-
 <!-- @include_end svelte/events -->
 
 <!-- @include_start svelte/legacy -->
-
 
 ```js
 // @noErrors
@@ -2399,10 +2360,7 @@ function asClassComponent<
 	component:
 		| import('svelte').SvelteComponent<Props, Events, Slots>
 		| import('svelte').Component<Props, any, string>
-): import('svelte').ComponentType<
-	import('svelte').SvelteComponent<Props, Events, Slots> &
-		Exports
->;
+): import('svelte').ComponentType<import('svelte').SvelteComponent<Props, Events, Slots> & Exports>;
 ```
 
 </div>
@@ -2423,20 +2381,13 @@ function createClassComponent<
 >(
 	options: import('svelte').ComponentConstructorOptions<Props> & {
 		component:
-			| import('svelte').ComponentType<
-					import('svelte').SvelteComponent<
-						Props,
-						Events,
-						Slots
-					>
-			  >
+			| import('svelte').ComponentType<import('svelte').SvelteComponent<Props, Events, Slots>>
 			| import('svelte').Component<Props, any, string>;
 		immutable?: boolean | undefined;
 		hydrate?: boolean | undefined;
 		recover?: boolean | undefined;
 	}
-): import('svelte').SvelteComponent<Props, Events, Slots> &
-	Exports;
+): import('svelte').SvelteComponent<Props, Events, Slots> & Exports;
 ```
 
 </div>
@@ -2454,11 +2405,9 @@ function run(fn: () => void | (() => void)): void;
 
 </div>
 
-
 <!-- @include_end svelte/legacy -->
 
 <!-- @include_start svelte/motion -->
-
 
 ```js
 // @noErrors
@@ -2475,10 +2424,7 @@ https://svelte.dev/docs/svelte-motion#spring
 
 ```ts
 // @noErrors
-function spring<T = any>(
-	value?: T | undefined,
-	opts?: SpringOpts | undefined
-): Spring<T>;
+function spring<T = any>(value?: T | undefined, opts?: SpringOpts | undefined): Spring<T>;
 ```
 
 </div>
@@ -2493,10 +2439,7 @@ https://svelte.dev/docs/svelte-motion#tweened
 
 ```ts
 // @noErrors
-function tweened<T>(
-	value?: T | undefined,
-	defaults?: TweenedOptions<T> | undefined
-): Tweened<T>;
+function tweened<T>(value?: T | undefined, defaults?: TweenedOptions<T> | undefined): Tweened<T>;
 ```
 
 </div>
@@ -2582,7 +2525,6 @@ update(updater: Updater<T>, opts?: TweenedOptions<T>): Promise<void>;
 </div>
 </div>
 
-
 <!-- @include_end svelte/motion -->
 
 <!-- @include_start svelte/reactivity -->
@@ -2590,7 +2532,6 @@ update(updater: Updater<T>, opts?: TweenedOptions<T>): Promise<void>;
 <!-- @include_end svelte/reactivity -->
 
 <!-- @include_start svelte/server -->
-
 
 ```js
 // @noErrors
@@ -2609,9 +2550,7 @@ Takes a component and returns an object with `body` and `head` properties on it,
 function render<Props extends Record<string, any>>(
 	component:
 		| import('svelte').Component<Props, any, string>
-		| import('svelte').ComponentType<
-				import('svelte').SvelteComponent<Props, any, any>
-		  >,
+		| import('svelte').ComponentType<import('svelte').SvelteComponent<Props, any, any>>,
 	options: {
 		props: Omit<Props, '$$slots' | '$$events'>;
 		context?: Map<any, any> | undefined;
@@ -2621,22 +2560,13 @@ function render<Props extends Record<string, any>>(
 
 </div>
 
-
 <!-- @include_end svelte/server -->
 
 <!-- @include_start svelte/store -->
 
-
 ```js
 // @noErrors
-import {
-	derived,
-	get,
-	readable,
-	readonly,
-	safe_not_equal,
-	writable
-} from 'svelte/store';
+import { derived, get, readable, readonly, safe_not_equal, writable } from 'svelte/store';
 ```
 
 ## derived
@@ -2708,10 +2638,7 @@ https://svelte.dev/docs/svelte-store#readable
 
 ```ts
 // @noErrors
-function readable<T>(
-	value?: T | undefined,
-	start?: StartStopNotifier<T> | undefined
-): Readable<T>;
+function readable<T>(value?: T | undefined, start?: StartStopNotifier<T> | undefined): Readable<T>;
 ```
 
 </div>
@@ -2733,8 +2660,6 @@ function readonly<T>(store: Readable<T>): Readable<T>;
 
 ## safe_not_equal
 
-
-
 <div class="ts-block">
 
 ```ts
@@ -2754,10 +2679,7 @@ https://svelte.dev/docs/svelte-store#writable
 
 ```ts
 // @noErrors
-function writable<T>(
-	value?: T | undefined,
-	start?: StartStopNotifier<T> | undefined
-): Writable<T>;
+function writable<T>(value?: T | undefined, start?: StartStopNotifier<T> | undefined): Writable<T>;
 ```
 
 </div>
@@ -2807,7 +2729,6 @@ type StartStopNotifier<T> = (
 ) => void | (() => void);
 ```
 
-
 </div>
 
 ## Subscriber
@@ -2819,7 +2740,6 @@ Callback to inform of a value updates.
 ```dts
 type Subscriber<T> = (value: T) => void;
 ```
-
 
 </div>
 
@@ -2833,7 +2753,6 @@ Unsubscribes from value updates.
 type Unsubscriber = () => void;
 ```
 
-
 </div>
 
 ## Updater
@@ -2845,7 +2764,6 @@ Callback to update a value.
 ```dts
 type Updater<T> = (value: T) => T;
 ```
-
 
 </div>
 
@@ -2898,23 +2816,13 @@ Update value using callback and inform subscribers.
 </div>
 </div>
 
-
 <!-- @include_end svelte/store -->
 
 <!-- @include_start svelte/transition -->
 
-
 ```js
 // @noErrors
-import {
-	blur,
-	crossfade,
-	draw,
-	fade,
-	fly,
-	scale,
-	slide
-} from 'svelte/transition';
+import { blur, crossfade, draw, fade, fly, scale, slide } from 'svelte/transition';
 ```
 
 ## blur
@@ -2929,13 +2837,7 @@ https://svelte.dev/docs/svelte-transition#blur
 // @noErrors
 function blur(
 	node: Element,
-	{
-		delay,
-		duration,
-		easing,
-		amount,
-		opacity
-	}?: BlurParams | undefined
+	{ delay, duration, easing, amount, opacity }?: BlurParams | undefined
 ): TransitionConfig;
 ```
 
@@ -2955,11 +2857,7 @@ function crossfade({
 	fallback,
 	...defaults
 }: CrossfadeParams & {
-	fallback?: (
-		node: Element,
-		params: CrossfadeParams,
-		intro: boolean
-	) => TransitionConfig;
+	fallback?: (node: Element, params: CrossfadeParams, intro: boolean) => TransitionConfig;
 }): [
 	(
 		node: any,
@@ -2992,12 +2890,7 @@ function draw(
 	node: SVGElement & {
 		getTotalLength(): number;
 	},
-	{
-		delay,
-		speed,
-		duration,
-		easing
-	}?: DrawParams | undefined
+	{ delay, speed, duration, easing }?: DrawParams | undefined
 ): TransitionConfig;
 ```
 
@@ -3033,14 +2926,7 @@ https://svelte.dev/docs/svelte-transition#fly
 // @noErrors
 function fly(
 	node: Element,
-	{
-		delay,
-		duration,
-		easing,
-		x,
-		y,
-		opacity
-	}?: FlyParams | undefined
+	{ delay, duration, easing, x, y, opacity }?: FlyParams | undefined
 ): TransitionConfig;
 ```
 
@@ -3058,13 +2944,7 @@ https://svelte.dev/docs/svelte-transition#scale
 // @noErrors
 function scale(
 	node: Element,
-	{
-		delay,
-		duration,
-		easing,
-		start,
-		opacity
-	}?: ScaleParams | undefined
+	{ delay, duration, easing, start, opacity }?: ScaleParams | undefined
 ): TransitionConfig;
 ```
 
@@ -3082,12 +2962,7 @@ https://svelte.dev/docs/svelte-transition#slide
 // @noErrors
 function slide(
 	node: Element,
-	{
-		delay,
-		duration,
-		easing,
-		axis
-	}?: SlideParams | undefined
+	{ delay, duration, easing, axis }?: SlideParams | undefined
 ): TransitionConfig;
 ```
 
@@ -3235,7 +3110,6 @@ easing?: EasingFunction;
 ```dts
 type EasingFunction = (t: number) => number;
 ```
-
 
 </div>
 
@@ -3491,6 +3365,4 @@ tick?: (t: number, u: number) => void;
 </div>
 </div>
 
-
 <!-- @include_end svelte/transition -->
-

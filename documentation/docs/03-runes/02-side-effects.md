@@ -197,22 +197,12 @@ Instead, use callbacks where possible ([demo](/#H4sIAAAAAAAACo2SP2-DMBDFv8rp1CFR
 </script>
 
 <label>
-	<input
-		type="range"
-		value={spent}
-		oninput={updateSpent}
-		max={total}
-	/>
+	<input type="range" value={spent} oninput={updateSpent} max={total} />
 	{spent}/{total} spent
 </label>
 
 <label>
-	<input
-		type="range"
-		value={left}
-		oninput={updateLeft}
-		max={total}
-	/>
+	<input type="range" value={left} oninput={updateLeft} max={total} />
 	{left}/{total} left
 </label>
 ```
@@ -267,10 +257,7 @@ In rare cases, you may need to run code _before_ the DOM updates. For this we ca
 		messages;
 
 		// autoscroll when new messages are added
-		if (
-			div.offsetHeight + div.scrollTop >
-			div.scrollHeight - 20
-		) {
+		if (div.offsetHeight + div.scrollTop > div.scrollHeight - 20) {
 			tick().then(() => {
 				div.scrollTo(0, div.scrollHeight);
 			});
